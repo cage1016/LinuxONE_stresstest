@@ -53,10 +53,7 @@ createSubCommand2(){
 	idx=0
 	for i in "${arrayPropertyList[@]}"
 	do
-		IFS='=' read -ra buf <<< "$i"
-		propertyName=${buf[0]}
-		propertyValue=${buf[1]}
-		commandString="${ommandString} -J${propertyName}=${propertyValue}"
+        commandString="${commandString} -J${i}"
 	done
 	
 	echo ${commandString}
