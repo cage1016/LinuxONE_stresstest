@@ -6,7 +6,7 @@ run-ap: ## run run-ap
 		-f ap.jmx \
 		-t ap \
 		-z true \
-		-l OUTPUT_FOLDER=$(PWD)/ap,TARGET_HOST=192.168.1.201,TARGET_PORT=8080,THREADS=1000,RAMD_UP=120,DURATION=600
+		-l OUTPUT_FOLDER=$(PWD)/ap,TARGET_HOST=192.168.1.201,TARGET_PORT=8080,THREADS=1000,RAMD_UP=120,DURATION=600,jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"'
 
 
 .PHONY: run-oracle
@@ -17,7 +17,7 @@ run-oracle: ## run-oracle
 		-f oracle.jmx \
 		-t oracle \
 		-z true \
-		-l OUTPUT_FOLDER=$(PWD)/oracle,THREADS=1000,RAMD_UP=120,DURATION=600
+		-l OUTPUT_FOLDER=$(PWD)/oracle,THREADS=1000,RAMD_UP=120,DURATION=600,jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"'
 
 
 .PHONY: help
