@@ -246,7 +246,18 @@ echo ""
 
 eval ${daemon} run --rm --name jmeter --network host -i -v ${PWD}:${PWD} -w ${PWD} ${jmeterDocker} ${jmxName} -l ${testFolder}/jmeter.jtl -j ${testFolder}/jmeter.log ${subCommand} -o ${rDir} -e
 
+echo ""
+echo ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh \
+	--generate-png /tmp/responseTimesOverTime.png --input-jtl /tmp/jmeter.jtl --plugin-type ResponseTimesOverTime
+echo ""
+
 eval ${daemon} run --rm -v ${PWD}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh --generate-png /tmp/responseTimesOverTime.png --input-jtl /tmp/jmeter.jtl --plugin-type ResponseTimesOverTime
+
+echo ""
+echo ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh \
+	--generate-png /tmp/perfMon.png --input-jtl /tmp/perfMon.jtl --plugin-type PerfMon
+echo ""
+
 eval ${daemon} run --rm -v ${PWD}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh --generate-png /tmp/perfMon.png --input-jtl /tmp/perfMon.jtl --plugin-type PerfMon
 
 echo ""
