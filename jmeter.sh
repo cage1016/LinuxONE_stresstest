@@ -45,19 +45,18 @@ checkOption(){
 
 createSubCommand2(){
 	# arg1: property list delimitted by comma (ex. parm1=xxx,parm2=yyy,parm3=zzz)
-	propertyList=$1
+	propertyList=$@
 
-	arrayPropertyList=(${propertyList//,/ })
+	IFS=',' read -ra arrayPropertyList <<< "$propertyList"
 
 	commandString=""
 	idx=0
-	while [[ ${idx} -lt ${#arrayPropertyList[@]} ]]
+	for i in "${arrayPropertyList[@]}"
 	do
-        keyValue=(${arrayPropertyList[${idx}]//=/ })
-		propertyName=${keyValue[0]}
-		propertyValue=${keyValue[1]}
-		commandString="${commandString} -J${propertyName}=${propertyValue}"
-		idx=$((idx+1))
+		IFS='=' read -ra buf <<< "$i"
+		propertyName=${buf[0]}
+		propertyValue=${buf[1]}
+		commandString="${ommandString} -J${propertyName}=${propertyValue}"
 	done
 	
 	echo ${commandString}
