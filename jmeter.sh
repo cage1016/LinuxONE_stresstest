@@ -246,6 +246,9 @@ echo ""
 
 eval ${daemon} run --rm --name jmeter --network host -i -v ${PWD}:${PWD} -w ${PWD} ${jmeterDocker} ${jmxName} -l ${testFolder}/jmeter.jtl -j ${testFolder}/jmeter.log ${subCommand} -o ${rDir} -e
 
+eval ${daemon} run --rm -v ${PWD}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh --generate-png /tmp/responseTimesOverTime.png --input-jtl /tmp/jmeter.jtl --plugin-type ResponseTimesOverTime
+eval ${daemon} run --rm -v ${PWD}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh --generate-png /tmp/perfMon.png --input-jtl /tmp/perfMon.jtl --plugin-type PerfMon
+
 echo ""
 echo "==== jmeter.log ===="
 echo "See jmeter log in ${testFolder}/jmeter.log"
@@ -258,6 +261,6 @@ echo "See HTML test report in ${rDir}/index.html"
 
 if [[ ${enbaleTargz} == "true" ]]; then
 	echo "==== Tar report ===="
-	tar czf ${testFolder}/$(date +%s).tar.gz ${testFolder}/*.log ${testFolder}/*.jtl ${rDir}
+	tar czf ${testFolder}/$(date +%s).tar.gz ${testFolder}/*.log ${testFolder}/*.jtl ${testFolder}/responseTimesOverTime.png ${testFolder}/perfMon.png ${rDir}
 	echo "See Tar file in ${testFolder}/$(date +%s).tar.gz"
 fi
