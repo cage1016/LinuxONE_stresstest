@@ -5,7 +5,7 @@ run-ap: ## run run-ap
 		-d podman \
 		-f ap.jmx \
 		-t ap \
-		-l OUTPUT_FOLDER=$(PWD),TARGET_HOST=192.168.1.201,TARGET_PORT=8080,THREADS=10,RAMD_UP=10,DURATION=20
+		-l OUTPUT_FOLDER=$(PWD)/ap,TARGET_HOST=192.168.1.201,TARGET_PORT=8080,THREADS=10,RAMD_UP=10,DURATION=20
 
 .PHONY: help
 help: ## this help
