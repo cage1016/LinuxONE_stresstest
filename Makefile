@@ -6,7 +6,7 @@ run-ap: ## run run-ap
 		-f ap.jmx \
 		-t ap \
 		-z true \
-		-l OUTPUT_FOLDER=$(PWD)/ap,TARGET_HOST=192.168.1.201,TARGET_PORT=8080,THREADS=10,RAMD_UP=10,DURATION=20
+		-l OUTPUT_FOLDER=$(PWD)/ap,TARGET_HOST=192.168.1.201,TARGET_PORT=8080,THREADS=1000,RAMD_UP=120,DURATION=600
 
 
 .PHONY: run-oracle
@@ -17,7 +17,8 @@ run-oracle: ## run-oracle
 		-f oracle.jmx \
 		-t oracle \
 		-z true \
-		-l OUTPUT_FOLDER=$(PWD)/oracle,THREADS=40,RAMD_UP=20,DURATION=120
+		-l OUTPUT_FOLDER=$(PWD)/oracle,THREADS=1000,RAMD_UP=120,DURATION=600
+
 
 .PHONY: help
 help: ## this help
