@@ -39,7 +39,7 @@ run-oracle2: ## run run-oracle2
 		-f oracle2.jmx \
 		-t oracle2 \
 		-z true \
-		-l jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"',OUTPUT_FOLDER=$(PWD)/oracle2 \
+		-l jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"',OUTPUT_FOLDER=$(PWD)/oracle2,ENV_COUNT=1000,ENV_INITDELAY=0,ENV_STARTUP=30,ENV_HOLD=300,ENV_SHUTDOWN=30 \
 		-g jmeter.jtl=ResponseTimesOverTime,perfMon.jtl=PerfMon,jmeter.jtl=ThreadsStateOverTime 2>&1 | tee run.log
 
 
