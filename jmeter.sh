@@ -75,6 +75,23 @@ createGeneratePngCommand(){
 	echo "${arrVar[*]}"
 }
 
+parseEnv(){
+	keys=("THREADS RAMD_UP DURATION")
+	propertyList=$@
+
+	IFS=',' read -ra arrayPropertyList <<< "$propertyList"
+	p=""
+	for i in "${arrayPropertyList[@]}"
+	do
+		IFS='=' read -ra buf <<< "$i"
+		if [[ ${keys[*]} =~ "${buf[0]}" ]]; then
+			p="${p}_"${buf[0]}_${buf[1]}""
+		fi		
+	done
+	
+	echo "${p}" 
+}
+
 showHelp(){
 	echo "Usage: ${scriptName} [-d <daemon>] [-i <jmeter_docker_image>] [-f <jmx_file>] [-t <test_folder>] [-z <enable_tar_html>] [-l <jmeterVariablesList>]"
 	echo " -d : Daemon, docker/podman (default: docker)"
@@ -257,12 +274,14 @@ if [[ ${flag_t} -ne 0 ]]; then
 	testFolder=${arg_t}
 fi
 rDir=${testFolder}/report
-rm -rf ${rDir} ${testFolder}/*.jtl ${testFolder}/*.log > /dev/null 2>&1
+rm -rf ${testFolder} > /dev/null 2>&1
 mkdir -p ${rDir}
 
 subCommand=""
+filePath1=""
 if [[ ${flag_l} -ne 0 ]]; then
 	subCommand=$(createSubCommand2 ${arg_l})
+	filePath1=$(parseEnv ${arg_l})
 fi
 
 echo ""
@@ -314,6 +333,15 @@ fi
 
 if [[ ${enbaleTargz} == "true" ]]; then
 	echo "==== Tar report ===="
-	tar czf ${testFolder}/${testFolder}-$(date +%s).tar.gz ${testFolder}/*.log ${testFolder}/*.jtl ${testFolder}/*.png ${rDir}
-	echo "See Tar file in ${testFolder}/${testFolder}-$(date +%s).tar.gz"
+
+	n=""
+	if [[ ! -z "$filePath1" ]]; then
+		n="${testFolder}-$(date '+%Y%m%d_%H%M')${filePath1}.tar.gz"
+	else
+		n="${testFolder}-$(date '+%Y%m%d_%H%M').tar.gz"
+	fi
+
+	mv run-${testFolder}.log ${testFolder}
+	echo "See Tar file in ${n}"
+	tar czf ${n} ${testFolder}/*.log ${testFolder}/*.png ${testFolder}/*.jtl ${rDir}
 fi
