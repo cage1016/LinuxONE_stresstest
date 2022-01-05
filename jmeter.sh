@@ -314,6 +314,6 @@ fi
 
 if [[ ${enbaleTargz} == "true" ]]; then
 	echo "==== Tar report ===="
-	tar czf ${testFolder}/$(date +%s).tar.gz ${testFolder}/*.log ${testFolder}/*.jtl ${testFolder}/*.png ${rDir}
+	tar czf ${testFolder}/${testFolder}-$(date +%s).tar.gz ${testFolder}/*.log ${testFolder}/*.jtl ${testFolder}/*.png ${rDir}
 	echo "See Tar file in ${testFolder}/${testFolder}-$(date +%s).tar.gz"
 fi
