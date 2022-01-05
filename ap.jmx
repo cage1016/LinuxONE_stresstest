@@ -26,21 +26,21 @@
             <stringProp name="Argument.desc">target port on TARGET_HOST for testing</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="THREADS" elementType="Argument">
-            <stringProp name="Argument.name">THREADS</stringProp>
-            <stringProp name="Argument.value">${__P(THREADS,1)}</stringProp>
+          <elementProp name="ENV_THREADS" elementType="Argument">
+            <stringProp name="Argument.name">ENV_THREADS</stringProp>
+            <stringProp name="Argument.value">${__P(ENV_THREADS,1)}</stringProp>
             <stringProp name="Argument.desc">Number of concurrent threads</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="RAMD_UP" elementType="Argument">
-            <stringProp name="Argument.name">RAMD_UP</stringProp>
-            <stringProp name="Argument.value">${__P(RAMD_UP,1)}</stringProp>
+          <elementProp name="ENV_RAMD_UP" elementType="Argument">
+            <stringProp name="Argument.name">ENV_RAMD_UP</stringProp>
+            <stringProp name="Argument.value">${__P(ENV_RAMD_UP,1)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">ramp-up to the full number of threads chosen</stringProp>
           </elementProp>
-          <elementProp name="DURATION" elementType="Argument">
-            <stringProp name="Argument.name">DURATION</stringProp>
-            <stringProp name="Argument.value">${__P(DURATION,10)}</stringProp>
+          <elementProp name="ENV_DURATION" elementType="Argument">
+            <stringProp name="Argument.name">ENV_DURATION</stringProp>
+            <stringProp name="Argument.value">${__P(ENV_DURATION,10)}</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">Thread duration - seconds</stringProp>
           </elementProp>
@@ -66,10 +66,10 @@
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${THREADS}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${RAMD_UP}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">${ENV_THREADS}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${ENV_RAMD_UP}</stringProp>
         <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">${DURATION}</stringProp>
+        <stringProp name="ThreadGroup.duration">${ENV_DURATION}</stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">false</boolProp>
       </ThreadGroup>

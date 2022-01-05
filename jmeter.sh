@@ -76,7 +76,6 @@ createGeneratePngCommand(){
 }
 
 parseEnv(){
-	keys=("THREADS RAMD_UP DURATION")
 	propertyList=$@
 
 	IFS=',' read -ra arrayPropertyList <<< "$propertyList"
@@ -84,8 +83,8 @@ parseEnv(){
 	for i in "${arrayPropertyList[@]}"
 	do
 		IFS='=' read -ra buf <<< "$i"
-		if [[ ${keys[*]} =~ "${buf[0]}" ]]; then
-			p="${p}_"${buf[0]}_${buf[1]}""
+		if [[ "${buf[0]}" =~ ^ENV_* ]]; then
+			p="${p}_${buf[0]:4}_${buf[1]}"
 		fi		
 	done
 	

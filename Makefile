@@ -6,7 +6,7 @@ run-ap: ## run run-ap
 		-f ap.jmx \
 		-t ap \
 		-z true \
-		-l OUTPUT_FOLDER=$(PWD)/ap,TARGET_HOST=192.168.1.201,TARGET_PORT=8080,THREADS=1000,RAMD_UP=120,DURATION=600,jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"' \
+		-l OUTPUT_FOLDER=$(PWD)/ap,TARGET_HOST=192.168.1.201,TARGET_PORT=8080,ENV_THREADS=1000,ENV_RAMD_UP=120,ENV_DURATION=300,jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"' \
 		-g jmeter.jtl=ResponseTimesOverTime,perfMon.jtl=PerfMon 2>&1 | tee run.log
 
 .PHONY: run-oracle
