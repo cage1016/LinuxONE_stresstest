@@ -341,7 +341,7 @@ if [[ ${enbaleTargz} == "true" ]]; then
 		n="${testFolder}-$(date '+%Y%m%d_%H%M').tar.gz"
 	fi
 
-	mv run-${testFolder}.log ${testFolder}
+	mv run.log ${testFolder}
 	echo "See Tar file in ${n}"
 	tar czf ${n} ${testFolder}/*.log ${testFolder}/*.png ${testFolder}/*.jtl ${rDir}
 fi
