@@ -265,6 +265,7 @@ if [[ ${flag_l} -ne 0 ]]; then
 	subCommand=$(createSubCommand2 ${arg_l})
 fi
 
+echo ""
 echo "# Jmeter"
 echo ${daemon} run --rm --name jmeter --network host -i -v $\{PWD\}:$\{PWD\} -w $\{PWD\} ${jmeterDocker} \
 	${jmxName} -l ${testFolder}/jmeter.jtl -j ${testFolder}/jmeter.log ${subCommand} -o ${rDir} -e
@@ -279,6 +280,7 @@ if [[ ${flag_g} -ne 0 ]]; then
 
 	for value in "${a[@]}"
 	do
+		echo ""
 		echo "# JMeterPluginsCMD.sh"
 		echo ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh $value
 		echo ""
@@ -313,5 +315,5 @@ fi
 if [[ ${enbaleTargz} == "true" ]]; then
 	echo "==== Tar report ===="
 	tar czf ${testFolder}/$(date +%s).tar.gz ${testFolder}/*.log ${testFolder}/*.jtl ${testFolder}/*.png ${rDir}
-	echo "See Tar file in ${testFolder}/$(date +%s).tar.gz"
+	echo "See Tar file in ${testFolder}/${testFolder}-$(date +%s).tar.gz"
 fi
