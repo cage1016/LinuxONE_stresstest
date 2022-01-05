@@ -19,7 +19,8 @@
 ##  -f : Specify JMX file
 ##  -l : Specify env list of Jmeter in following format: prop01=XXX,bbb=YYY,ccc=ZZZ
 ##  -z : Enable tar html report (default: false)
-##  
+##  -g : Specify generate-png of Jmeter in following format: jmeter.jtl=ResponseTimesOverTime,perfMon.jtl=PerfMon
+##
 ##   Example1: jmeter.sh -f ap.jmx
 ##   Example2: jmeter.sh -i ghcr.io/cage1016/jmeter:5.4.1 -f ap.jmx
 ##   Example3: jmeter.sh -i ghcr.io/cage1016/jmeter:5.4.1 -f ap.jmx -l prop01=XXX,prop02=YYY
@@ -30,7 +31,7 @@ scriptName=$(basename $0)
 
 ### check whether string is "option" (stats with "-")
 checkOption(){
-	# result: 0=false, other=true          
+	# result: 0=false, other=true
 	var=$1
 
 	if [[ "${var}" = "-" ]]; then
@@ -55,8 +56,23 @@ createSubCommand2(){
 	do
         commandString="${commandString} -J${i}"
 	done
-	
+
 	echo ${commandString}
+}
+
+createGeneratePngCommand(){
+	propertyList=$@
+
+	IFS=',' read -ra arrayPropertyList <<< "$propertyList"
+
+    arrVar=()
+	for i in "${arrayPropertyList[@]}"
+	do
+		IFS='=' read -ra buf <<< "$i"
+        arrVar+=("--generate-png /tmp/${buf[1]}.png --input-jtl /tmp/${buf[0]} --plugin-type ${buf[1]},")
+	done
+
+	echo "${arrVar[*]}"
 }
 
 showHelp(){
@@ -67,6 +83,7 @@ showHelp(){
 	echo " -f : Specify JMX file"
 	echo " -l : Specify env list of Jmeter in following format: prop01=XXX,bbb=YYY,ccc=ZZZ"
 	echo " -z : Enable tar html report (default: false)"
+	echo " -g : Specify generate-png of Jmeter in following format: jmeter.jtl=ResponseTimesOverTime,perfMon.jtl=PerfMon"
 	echo " "
 	echo "  Example1: ${scriptName} -f ap.jmx"
 	echo "  Example2: ${scriptName} -i ghcr.io/cage1016/jmeter:5.4.1 -f ap.jmx"
@@ -91,6 +108,8 @@ arg_t=
 flag_t=0
 arg_z=
 flag_z=0
+arg_g=
+flag_g=0
 
 for option in "$@"
 do
@@ -135,7 +154,7 @@ do
 				arg_f="$2"
 				shift 2
 			fi
-			;;      
+			;;
 		'-l')
 			flag_l=1
 			if [[ -z "$2" ]] || [[ $(checkOption "$2") -ne 0 ]] ; then
@@ -170,6 +189,17 @@ do
 				exit 1
 			else
 				arg_z=$2
+				shift 2
+			fi
+			;;
+		'-g')
+			flag_g=1
+			if [[ -z "$2" ]] || [[ $(checkOption "$2") -ne 0 ]] ; then
+				echo "Error: Argument is required for -g"
+				showHelp
+				exit 1
+			else
+				arg_g=$2
 				shift 2
 			fi
 			;;
@@ -232,42 +262,56 @@ mkdir -p ${rDir}
 
 subCommand=""
 if [[ ${flag_l} -ne 0 ]]; then
-	subCommand=$(createSubCommand2 ${arg_l})	
+	subCommand=$(createSubCommand2 ${arg_l})
 fi
 
-echo ""
+echo "# Jmeter"
 echo ${daemon} run --rm --name jmeter --network host -i -v $\{PWD\}:$\{PWD\} -w $\{PWD\} ${jmeterDocker} \
 	${jmxName} -l ${testFolder}/jmeter.jtl -j ${testFolder}/jmeter.log ${subCommand} -o ${rDir} -e
 echo ""
 
 eval ${daemon} run --rm --name jmeter --network host -i -v ${PWD}:${PWD} -w ${PWD} ${jmeterDocker} ${jmxName} -l ${testFolder}/jmeter.jtl -j ${testFolder}/jmeter.log ${subCommand} -o ${rDir} -e
 
-echo ""
-echo ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh \
-	--generate-png /tmp/responseTimesOverTime.png --input-jtl /tmp/jmeter.jtl --plugin-type ResponseTimesOverTime
-echo ""
+generatePngCommand=''
+if [[ ${flag_g} -ne 0 ]]; then
+	generatePngCommand=$(createGeneratePngCommand ${arg_g})
+	IFS=',' read -ra a <<< "$generatePngCommand"
 
-eval ${daemon} run --rm -v ${PWD}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh --generate-png /tmp/responseTimesOverTime.png --input-jtl /tmp/jmeter.jtl --plugin-type ResponseTimesOverTime
+	for value in "${a[@]}"
+	do
+		echo "# JMeterPluginsCMD.sh"
+		echo ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh $value
+		echo ""
 
-echo ""
-echo ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh \
-	--generate-png /tmp/perfMon.png --input-jtl /tmp/perfMon.jtl --plugin-type PerfMon
-echo ""
-
-eval ${daemon} run --rm -v ${PWD}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh --generate-png /tmp/perfMon.png --input-jtl /tmp/perfMon.jtl --plugin-type PerfMon
+		eval ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh $value
+	done
+fi
 
 echo ""
 echo "==== jmeter.log ===="
 echo "See jmeter log in ${testFolder}/jmeter.log"
+echo ""
 
 echo "==== Raw Test Report ===="
 echo "See Raw test report in ${testFolder}/${jmxName}.jtl"
+echo ""
 
 echo "==== HTML Test Report ===="
 echo "See HTML test report in ${rDir}/index.html"
+echo ""
+
+if [[ ! -z "$generatePngCommand" ]]; then
+	echo "==== Generate PNG ===="
+	echo "See generate png in ${testFolder}"
+	for entry in "${testFolder}"/*.png
+	do
+		echo "$entry"
+	done
+	echo ""
+fi
 
 if [[ ${enbaleTargz} == "true" ]]; then
 	echo "==== Tar report ===="
-	tar czf ${testFolder}/$(date +%s).tar.gz ${testFolder}/*.log ${testFolder}/*.jtl ${testFolder}/responseTimesOverTime.png ${testFolder}/perfMon.png ${rDir}
+	tar czf ${testFolder}/$(date +%s).tar.gz ${testFolder}/*.log ${testFolder}/*.jtl ${testFolder}/*.png ${rDir}
 	echo "See Tar file in ${testFolder}/$(date +%s).tar.gz"
 fi
