@@ -28,8 +28,19 @@ run-oracle: ## run-oracle
 		-f oracle.jmx \
 		-t oracle \
 		-z true \
-		-l OUTPUT_FOLDER=$(PWD)/oracle,THREADS=1000,RAMD_UP=120,DURATION=600,jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"' \
-		-g jmeter.jtl=ResponseTimesOverTime,perfMon.jtl=PerfMon 2>&1 | tee run.log
+		-l jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"',OUTPUT_FOLDER=$(PWD)/oracle,THREADS=1000,RAMD_UP=120,DURATION=600 \
+		-g jmeter.jtl=ResponseTimesOverTime,perfMon.jtl=PerfMon,jmeter.jtl=ThreadsStateOverTime 2>&1 | tee run.log
+
+.PHONY: run-oracle2
+run-oracle2: ## run run-oracle2
+	@echo "Running run-oracle2"
+	./jmeter.sh -i ghcr.io/cage1016/jmeter-s390x:5.4.1 \
+		-d podman \
+		-f oracle2.jmx \
+		-t oracle2 \
+		-z true \
+		-l jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"',OUTPUT_FOLDER=$(PWD)/ap2,ENV_COUNT=1000,ENV_INITDELAY=0,ENV_STARTUP=30,ENV_HOLD=300,ENV_SHUTDOWN=30 \
+		-g jmeter.jtl=ResponseTimesOverTime,perfMon.jtl=PerfMon,jmeter.jtl=ThreadsStateOverTime 2>&1 | tee run.log
 
 
 .PHONY: help
