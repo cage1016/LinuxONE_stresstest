@@ -6,8 +6,19 @@ run-ap: ## run run-ap
 		-f ap.jmx \
 		-t ap \
 		-z true \
-		-l OUTPUT_FOLDER=$(PWD)/ap,TARGET_HOST=192.168.1.201,TARGET_PORT=8080,ENV_THREADS=1000,ENV_RAMD_UP=120,ENV_DURATION=300,jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"' \
-		-g jmeter.jtl=ResponseTimesOverTime,perfMon.jtl=PerfMon 2>&1 | tee run.log
+		-l jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"',OUTPUT_FOLDER=$(PWD)/ap,TARGET_HOST=192.168.1.201,TARGET_PORT=8080,ENV_THREADS=1000,ENV_RAMD_UP=120,ENV_DURATION=300 \
+		-g jmeter.jtl=ResponseTimesOverTime,perfMon.jtl=PerfMon,jmeter.jtl=ThreadsStateOverTime 2>&1 | tee run.log
+
+.PHONY: run-ap2
+run-ap2: ## run run-ap2
+	@echo "Running run-ap2"
+	./jmeter.sh -i ghcr.io/cage1016/jmeter-s390x:5.4.1 \
+		-d podman \
+		-f ap2.jmx \
+		-t ap2 \
+		-z true \
+		-l jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"',OUTPUT_FOLDER=$(PWD)/ap2,TARGET_HOST=192.168.1.201,TARGET_PORT=8080,ENV_COUNT=1000,ENV_INITDELAY=0,ENV_STARTUP=30,ENV_HOLD=300,ENV_SHUTDOWN=30 \
+		-g jmeter.jtl=ResponseTimesOverTime,perfMon.jtl=PerfMon,jmeter.jtl=ThreadsStateOverTime 2>&1 | tee run.log
 
 .PHONY: run-oracle
 run-oracle: ## run-oracle
