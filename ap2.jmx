@@ -26,36 +26,6 @@
             <stringProp name="Argument.desc">target port on TARGET_HOST for testing</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="ENV_COUNT" elementType="Argument">
-            <stringProp name="Argument.name">ENV_COUNT</stringProp>
-            <stringProp name="Argument.value">${__P(ENV_COUNT,1)}</stringProp>
-            <stringProp name="Argument.desc">Start Thread Count</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="ENV_INITDELAY" elementType="Argument">
-            <stringProp name="Argument.name">ENV_INITDELAY</stringProp>
-            <stringProp name="Argument.value">${__P(ENV_INITDELAY,1)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">Init Delay, sec</stringProp>
-          </elementProp>
-          <elementProp name="ENV_STARTUP" elementType="Argument">
-            <stringProp name="Argument.name">ENV_STARTUP</stringProp>
-            <stringProp name="Argument.value">${__P(ENV_STARTUP,1)}</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-            <stringProp name="Argument.desc">Startup Time, sec</stringProp>
-          </elementProp>
-          <elementProp name="ENV_HOLD" elementType="Argument">
-            <stringProp name="Argument.name">ENV_HOLD</stringProp>
-            <stringProp name="Argument.value">${__P(ENV_HOLD,1)}</stringProp>
-            <stringProp name="Argument.desc">Hold Load for, sec</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
-          <elementProp name="ENV_SHUTDOWN" elementType="Argument">
-            <stringProp name="Argument.name">ENV_SHUTDOWN</stringProp>
-            <stringProp name="Argument.value">${__P(ENV_SHUTDOWN,1)}</stringProp>
-            <stringProp name="Argument.desc">Shutdown Time</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
           <elementProp name="OUTPUT_FOLDER" elementType="Argument">
             <stringProp name="Argument.name">OUTPUT_FOLDER</stringProp>
             <stringProp name="Argument.value">${__P(OUTPUT_FOLDER,.)}</stringProp>
@@ -67,15 +37,7 @@
       </Arguments>
       <hashTree/>
       <kg.apc.jmeter.threads.UltimateThreadGroup guiclass="kg.apc.jmeter.threads.UltimateThreadGroupGui" testclass="kg.apc.jmeter.threads.UltimateThreadGroup" testname="jp@gc - Ultimate Thread Group" enabled="true">
-        <collectionProp name="ultimatethreadgroupdata">
-          <collectionProp name="210349709">
-            <stringProp name="-1556135625">${ENV_COUNT}</stringProp>
-            <stringProp name="0">${ENV_INITDELAY}</stringProp>
-            <stringProp name="1598">${ENV_STARTUP}</stringProp>
-            <stringProp name="50547">${ENV_HOLD}</stringProp>
-            <stringProp name="1598">${ENV_SHUTDOWN}</stringProp>
-          </collectionProp>
-        </collectionProp>
+        <collectionProp name="ultimatethreadgroupdata"/>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
           <intProp name="LoopController.loops">-1</intProp>
@@ -1484,11 +1446,17 @@
           <boolProp name="include_checkbox_state">false</boolProp>
           <boolProp name="exclude_checkbox_state">false</boolProp>
           <collectionProp name="metricConnections">
-            <collectionProp name="1054324556">
-              <stringProp name="1719401943">${TARGET_HOST}</stringProp>
+            <collectionProp name="450897782">
+              <stringProp name="-2051272297">192.168.1.201</stringProp>
               <stringProp name="1600768">4444</stringProp>
               <stringProp name="66952">CPU</stringProp>
               <stringProp name="0"></stringProp>
+            </collectionProp>
+            <collectionProp name="449825306">
+              <stringProp name="-2051272296">192.168.1.202</stringProp>
+              <stringProp reference="../../collectionProp/stringProp[2]"/>
+              <stringProp name="66952">CPU</stringProp>
+              <stringProp reference="../../collectionProp/stringProp[4]"/>
             </collectionProp>
           </collectionProp>
         </kg.apc.jmeter.perfmon.PerfMonCollector>

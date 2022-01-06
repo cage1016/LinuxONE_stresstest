@@ -48,7 +48,7 @@ createSubCommand2(){
 	# arg1: property list delimitted by comma (ex. parm1=xxx,parm2=yyy,parm3=zzz)
 	propertyList=$@
 
-	IFS=',' read -ra arrayPropertyList <<< "$propertyList"
+	IFS=';' read -ra arrayPropertyList <<< "$propertyList"
 
 	commandString=""
 	idx=0
@@ -63,13 +63,13 @@ createSubCommand2(){
 createGeneratePngCommand(){
 	propertyList=$@
 
-	IFS=',' read -ra arrayPropertyList <<< "$propertyList"
+	IFS=';' read -ra arrayPropertyList <<< "$propertyList"
 
     arrVar=()
 	for i in "${arrayPropertyList[@]}"
 	do
 		IFS='=' read -ra buf <<< "$i"
-        arrVar+=("--generate-png /tmp/${buf[1]}.png --input-jtl /tmp/${buf[0]} --plugin-type ${buf[1]},")
+        arrVar+=("--generate-png /tmp/${buf[1]}.png --input-jtl /tmp/${buf[0]} --plugin-type ${buf[1]};")
 	done
 
 	echo "${arrVar[*]}"
@@ -78,7 +78,7 @@ createGeneratePngCommand(){
 parseEnv(){
 	propertyList=$@
 
-	IFS=',' read -ra arrayPropertyList <<< "$propertyList"
+	IFS=';' read -ra arrayPropertyList <<< "$propertyList"
 	p=""
 	for i in "${arrayPropertyList[@]}"
 	do
@@ -294,7 +294,7 @@ eval ${daemon} run --rm --name jmeter --network host -i -v ${PWD}:${PWD} -w ${PW
 generatePngCommand=''
 if [[ ${flag_g} -ne 0 ]]; then
 	generatePngCommand=$(createGeneratePngCommand ${arg_g})
-	IFS=',' read -ra a <<< "$generatePngCommand"
+	IFS=';' read -ra a <<< "$generatePngCommand"
 
 	for value in "${a[@]}"
 	do
