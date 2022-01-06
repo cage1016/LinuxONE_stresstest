@@ -305,6 +305,12 @@ if [[ ${flag_g} -ne 0 ]]; then
 
 		eval ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint bash ${jmeterDocker} /opt/apache-jmeter-5.4.1/bin/JMeterPluginsCMD.sh $value
 	done
+
+	echo ""
+	echo "# imagemagick convert"
+	echo ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint convert ${jmeterDocker} /tmp/*.png +append /tmp/all.png
+	eval ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint convert ${jmeterDocker} /tmp/*.png +append /tmp/all.png
+	echo ""
 fi
 
 echo ""
