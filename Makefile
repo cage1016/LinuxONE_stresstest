@@ -17,7 +17,7 @@ run-ap2: ## run run-ap2
 		-f ap2.jmx \
 		-t ap2 \
 		-z true \
-		-l 'jmeter.save.saveservice.timestamp_format="yyyy/MM/dd HH:mm:ss";OUTPUT_FOLDER=$(PWD)/ap2;TARGET_HOST=192.168.1.201;TARGET_PORT=8080;threads_schedule="spawn(15,1s,2s,1s,1s) spawn(15,1s,2s,3s,3s)"' \
+		-l 'jmeter.save.saveservice.timestamp_format="yyyy/MM/dd HH:mm:ss";OUTPUT_FOLDER=$(PWD)/ap2;TARGET_HOST=192.168.1.201;TARGET_PORT=8080;threads_schedule="spawn(200,10s,10s,50s,10s) spawn(300,10s,10s,100s,30s) spawn(400,10s,10s,150s,30s)"' \
 		-g 'jmeter.jtl=ResponseTimesOverTime;perfMon.jtl=PerfMon;jmeter.jtl=ThreadsStateOverTime' 2>&1 | tee run.log
 
 .PHONY: run-oracle
@@ -39,9 +39,13 @@ run-oracle2: ## run run-oracle2
 		-f oracle2.jmx \
 		-t oracle2 \
 		-z true \
-		-l 'jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"';OUTPUT_FOLDER=$(PWD)/oracle2;threads_schedule="spawn(15,1s,2s,1s,1s) spawn(15,1s,2s,3s,3s)"' \
+		-l 'jmeter.save.saveservice.timestamp_format='"yyyy/MM/dd HH:mm:ss"';OUTPUT_FOLDER=$(PWD)/oracle2;threads_schedule="spawn(200,10s,10s,50s,10s) spawn(300,10s,10s,100s,30s) spawn(400,10s,10s,150s,30s)"' \
 		-g 'jmeter.jtl=ResponseTimesOverTime;perfMon.jtl=PerfMon;jmeter.jtl=ThreadsStateOverTime' 2>&1 | tee run.log
 
+.PHONY: download
+download: ## download
+	@echo "Downloading files"
+	scp ibmu01@sysage.tech:/home/kaichu/LinuxONE_stresstest/$(f) ./tmp
 
 .PHONY: help
 help: ## this help
