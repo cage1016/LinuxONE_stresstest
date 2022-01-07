@@ -6,7 +6,7 @@ run-ap: ## run run-ap
 		-f ap.jmx \
 		-t ap \
 		-z true \
-		-l 'jmeter.save.saveservice.timestamp_format="yyyy/MM/dd HH:mm:ss";TARGET_HOST=192.168.1.201;TARGET_PORT=8080;ENV_THREADS=1;ENV_RAMD_UP=1;ENV_DURATION=1' \
+		-l 'jmeter.save.saveservice.timestamp_format="yyyy/MM/dd HH:mm:ss";OUTPUT_FOLDER=$(PWD)/ap;TARGET_HOST=192.168.1.201;TARGET_PORT=8080;ENV_THREADS=1;ENV_RAMD_UP=1;ENV_DURATION=1' \
 		-g 'jmeter.jtl=ResponseTimesOverTime;perfMon.jtl=PerfMon;jmeter.jtl=ThreadsStateOverTime' 2>&1 | tee run.log
 
 .PHONY: run-ap2
@@ -17,7 +17,7 @@ run-ap2: ## run run-ap2
 		-f ap2.jmx \
 		-t ap2 \
 		-z true \
-		-l 'jmeter.save.saveservice.timestamp_format="yyyy/MM/dd HH:mm:ss";TARGET_HOST=192.168.1.201;TARGET_PORT=8080;threads_schedule="spawn(200,10s,10s,50s,10s) spawn(300,10s,10s,100s,30s) spawn(400,10s,10s,150s,30s)"' \
+		-l 'jmeter.save.saveservice.timestamp_format="yyyy/MM/dd HH:mm:ss";OUTPUT_FOLDER=$(PWD)/ap2;TARGET_HOST=192.168.1.201;TARGET_PORT=8080;threads_schedule="spawn(200,10s,10s,50s,10s) spawn(300,10s,10s,100s,30s) spawn(400,10s,10s,150s,30s)"' \
 		-g 'jmeter.jtl=ResponseTimesOverTime;perfMon.jtl=PerfMon;jmeter.jtl=ThreadsStateOverTime' 2>&1 | tee run.log
 
 .PHONY: run-oracle
@@ -28,7 +28,7 @@ run-oracle: ## run-oracle
 		-f oracle.jmx \
 		-t oracle \
 		-z true \
-		-l 'jmeter.save.saveservice.timestamp_format="yyyy/MM/dd HH:mm:ss";THREADS=1000;RAMD_UP=120;DURATION=600' \
+		-l 'jmeter.save.saveservice.timestamp_format="yyyy/MM/dd HH:mm:ss";OUTPUT_FOLDER=$(PWD)/oracle;THREADS=1000;RAMD_UP=120;DURATION=600' \
 		-g 'jmeter.jtl=ResponseTimesOverTime;perfMon.jtl=PerfMon;jmeter.jtl=ThreadsStateOverTime' 2>&1 | tee run.log
 
 .PHONY: run-oracle2
@@ -39,7 +39,7 @@ run-oracle2: ## run run-oracle2
 		-f oracle2.jmx \
 		-t oracle2 \
 		-z true \
-		-l 'jmeter.save.saveservice.timestamp_format="yyyy/MM/dd HH:mm:ss";threads_schedule="spawn(200,10s,10s,50s,10s) spawn(300,10s,10s,100s,30s) spawn(400,10s,10s,150s,30s)"' \
+		-l 'jmeter.save.saveservice.timestamp_format="yyyy/MM/dd HH:mm:ss";OUTPUT_FOLDER=$(PWD)/oracle2;threads_schedule="spawn(200,10s,10s,50s,10s) spawn(300,10s,10s,100s,30s) spawn(400,10s,10s,150s,30s)"' \
 		-g 'jmeter.jtl=ResponseTimesOverTime;perfMon.jtl=PerfMon;jmeter.jtl=ThreadsStateOverTime' 2>&1 | tee run.log
 
 .PHONY: download
