@@ -285,7 +285,7 @@ fi
 
 echo ""
 echo "# Jmeter"
-echo ${daemon} run --rm --name jmeter --network host -i -v $\{PWD\}:$\{PWD\} -w $\{PWD\} ${jmeterDocker} \
+echo ${daemon} run --rm --name jmeter --network host -i -v $\{PWD\}:/tmp -w /tmp ${jmeterDocker} \
 	${jmxName} -l ${testFolder}/jmeter.jtl -j ${testFolder}/jmeter.log ${subCommand} -o ${rDir} -e
 echo ""
 
@@ -308,8 +308,8 @@ if [[ ${flag_g} -ne 0 ]]; then
 
 	echo ""
 	echo "# imagemagick convert"
-	echo ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint convert ${jmeterDocker} /tmp/*.png +append /tmp/all.png
-	eval ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint convert ${jmeterDocker} /tmp/*.png +append /tmp/all.png
+	echo ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint convert ${jmeterDocker} /tmp/*.png +append /tmp/${testFolder}-all.png
+	eval ${daemon} run --rm -v $\{PWD\}/${testFolder}:/tmp --entrypoint convert ${jmeterDocker} /tmp/*.png +append /tmp/${testFolder}-all.png
 	echo ""
 fi
 

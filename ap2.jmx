@@ -26,12 +26,6 @@
             <stringProp name="Argument.desc">target port on TARGET_HOST for testing</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
-          <elementProp name="OUTPUT_FOLDER" elementType="Argument">
-            <stringProp name="Argument.name">OUTPUT_FOLDER</stringProp>
-            <stringProp name="Argument.value">${__P(OUTPUT_FOLDER,.)}</stringProp>
-            <stringProp name="Argument.desc">Plugin output folder</stringProp>
-            <stringProp name="Argument.metadata">=</stringProp>
-          </elementProp>
         </collectionProp>
         <stringProp name="TestPlan.comments">Example using UDV for symbolic names test target and response to test</stringProp>
       </Arguments>
@@ -1436,7 +1430,7 @@
               <connectTime>true</connectTime>
             </value>
           </objProp>
-          <stringProp name="filename">${OUTPUT_FOLDER}/perfMon.jtl</stringProp>
+          <stringProp name="filename">/tmp/perfMon.jtl</stringProp>
           <longProp name="interval_grouping">1000</longProp>
           <boolProp name="graph_aggregated">false</boolProp>
           <stringProp name="include_sample_labels"></stringProp>
