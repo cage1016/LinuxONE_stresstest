@@ -1,7 +1,7 @@
 .PHONY: run-ap
 run-ap: ## run run-ap
 	@echo "Running run-ap"
-	./jmeter.sh -i ghcr.io/cage1016/jmeter-s390x:5.4.1 \
+	./jmeter.sh -i ghcr.io/cage1016/jmeter:5.4.1 \
 		-d podman \
 		-f ap.jmx \
 		-t ap \
@@ -12,7 +12,7 @@ run-ap: ## run run-ap
 .PHONY: run-ap2
 run-ap2: ## run run-ap2
 	@echo "Running run-ap2"
-	./jmeter.sh -i ghcr.io/cage1016/jmeter-s390x:5.4.1 \
+	./jmeter.sh -i ghcr.io/cage1016/jmeter:5.4.1 \
 		-d podman \
 		-f ap2.jmx \
 		-t ap2 \
@@ -23,7 +23,7 @@ run-ap2: ## run run-ap2
 .PHONY: run-oracle
 run-oracle: ## run-oracle
 	@echo "Running run-oracle"
-	./jmeter.sh -i ghcr.io/cage1016/jmeter-s390x:5.4.1 \
+	./jmeter.sh -i ghcr.io/cage1016/jmeter:5.4.1 \
 		-d podman \
 		-f oracle.jmx \
 		-t oracle \
@@ -34,7 +34,7 @@ run-oracle: ## run-oracle
 .PHONY: run-oracle2
 run-oracle2: ## run run-oracle2
 	@echo "Running run-oracle2"
-	./jmeter.sh -i ghcr.io/cage1016/jmeter-s390x:5.4.1 \
+	./jmeter.sh -i ghcr.io/cage1016/jmeter:5.4.1 \
 		-d podman \
 		-f oracle2.jmx \
 		-t oracle2 \

@@ -1452,12 +1452,6 @@
               <stringProp name="66952">CPU</stringProp>
               <stringProp name="0"></stringProp>
             </collectionProp>
-            <collectionProp name="449825306">
-              <stringProp name="-2051272296">192.168.1.202</stringProp>
-              <stringProp reference="../../collectionProp/stringProp[2]"/>
-              <stringProp name="66952">CPU</stringProp>
-              <stringProp reference="../../collectionProp/stringProp[4]"/>
-            </collectionProp>
           </collectionProp>
         </kg.apc.jmeter.perfmon.PerfMonCollector>
         <hashTree/>
