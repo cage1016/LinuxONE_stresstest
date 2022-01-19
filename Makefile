@@ -6,7 +6,7 @@ run-ap: ## run run-ap
 		-f ap.jmx \
 		-t ap \
 		-z true \
-		-l 'jmeter.save.saveservice.timestamp_format="yyyy/MM/dd HH:mm:ss";OUTPUT_FOLDER=$(PWD)/ap;TARGET_HOST=192.168.1.201;TARGET_PORT=8080;ENV_THREADS=1;ENV_RAMD_UP=1;ENV_DURATION=1' \
+		-l 'jmeter.save.saveservice.timestamp_format="yyyy/MM/dd HH:mm:ss";OUTPUT_FOLDER=$(PWD)/ap;TARGET_HOST=192.168.1.201;TARGET_PORT=8080;ENV_THREADS=1000;ENV_RAMD_UP=120;ENV_DURATION=300' \
 		-g 'jmeter.jtl=ResponseTimesOverTime;perfMon.jtl=PerfMon;jmeter.jtl=ThreadsStateOverTime' 2>&1 | tee run.log
 
 .PHONY: run-ap2
