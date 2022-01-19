@@ -25,6 +25,12 @@ prerequisites:
     # OUTPUT_FOLDER=$(PWD)/ap2;TARGET_HOST=192.168.1.201;TARGET_PORT=8080;threads_schedule="spawn(200,10s,10s,50s,10s) spawn(300,10s,10s,100s,30s) spawn(400,10s,10s,150s,30s)"
     make run-ap2
     ```
+1. Result
+
+    ap
+    ![ap](screenshot/ap.png)
+    ap2
+    ![ap2](screenshot/ap2.png)
 
 ### Scenario 2
 
@@ -42,3 +48,9 @@ prerequisites
     # OUTPUT_FOLDER=$(PWD)/oracle2;threads_schedule="spawn(200,10s,10s,50s,10s) spawn(300,10s,10s,100s,30s) spawn(400,10s,10s,150s,30s)"
     make run-oracle2
     ```
+1. Result
+
+    oracle
+    ![oracle](screenshot/oracle.png)
+    oracle2
+    ![oracle2](screenshot/oracle2.png)
